@@ -323,9 +323,9 @@ class ReportPortalService(object):
                 logger.debug(logger.debug(f"The response for HTTP-POST of the log-items creation is as "
                                           f"following:\n{r.text}"))
                 return _get_data(r)
-            except ResponseError as e:
+            except requests.exceptions.RequestException as e:
                 attachment_error = e
-                logger.warning(f"The HTTP-POST for the log-items creation attempt {i + 1} has failed!")
+                logger.warning(f"The HTTP-POST for the log-items creation attempt {i + 1} has failed! {e}")
                 logger.debug("Sleeping for 1 second..")
                 sleep(1)
         logger.error(f"Failed to create the log-item entries since all {attachment_retries} attempts have "
